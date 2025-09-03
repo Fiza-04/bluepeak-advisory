@@ -21,7 +21,8 @@ export default function SurprisingRates() {
       direction={{ base: 'column', md: 'row' }}
       w={'100%'}
       px={{ base: 4, sm: 10, md: 12, xl: 20 }}
-      py={20}
+      pb={{ base: 10, md: 10 }}
+      pt={{ base: 0, lg: 10 }}
       gap={10}
       color={'black'}
     >

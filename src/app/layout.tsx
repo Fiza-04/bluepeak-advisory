@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import { Provider } from "@/components/ui/provider";
+import Navbar from "@/components/navbar";
+import Footer from "@/sections/footer";
+import { Box } from "@chakra-ui/react";
 
 const lato = Lato({
   variable: "--font-lato",
@@ -22,7 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${lato.variable}`}>
-        <Provider>{children}</Provider>
+        <Provider>
+          <Box bg="white" h={'fit-content'} px={{ base: 4, sm: 8, md: 12, xl: 28 }}>
+            <Navbar />
+            {children}
+            <Footer />
+          </Box>
+        </Provider>
       </body>
     </html>
   );

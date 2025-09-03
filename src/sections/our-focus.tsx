@@ -2,6 +2,7 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import CustomButton from "@/components/custom-button";
 import CountGrid from "@/components/count-grid";
+import { FaSquareArrowUpRight } from "react-icons/fa6";
 
 const lato700 = Lato({
   variable: "--font-lato",
@@ -11,7 +12,14 @@ const lato700 = Lato({
 
 export default function OurFocus() {
   return (
-    <Flex direction={{ base: 'column', md: 'row' }} w={'100%'} px={{ base: 4, sm: 6, md: 8, lg: 12, xl: 28 }} pb={20} gap={10}>
+    <Flex
+      direction={{ base: 'column', md: 'row' }}
+      w={'100%'}
+      my={{ base: 0, md: 6, lg: 20 }}
+      px={{ base: 4, sm: 6, md: 8, lg: 12, xl: 28 }}
+      pb={{ base: 10, xl: 20 }}
+      gap={10}
+    >
       <Box color={'black'} w={{ base: '100%', md: '45%' }}>
         <Text
           fontSize={'14px'}
@@ -34,7 +42,7 @@ export default function OurFocus() {
           Keeping you informed on tax laws and financial trends
         </Text>
         <Flex w={'100%'} align={'center'} justify={{ base: 'center', md: 'start' }}>
-          <CustomButton label="Read More" />
+          <CustomButton label="Read More" btnIcon={<FaSquareArrowUpRight size={24} />} />
         </Flex>
       </Box>
       <Box w={{ base: '100%', md: '550px', lg: '650px' }}>

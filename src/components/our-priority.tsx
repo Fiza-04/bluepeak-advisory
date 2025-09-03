@@ -2,6 +2,8 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import BannerText from "./banner-text";
 import CustomButton from "./custom-button";
+import { FaSquareArrowUpRight } from "react-icons/fa6";
+import { cards } from "../../utils/all-data";
 
 const lato400 = Lato({
   variable: "--font-lato",
@@ -11,11 +13,6 @@ const lato400 = Lato({
 
 export default function OurPriority() {
 
-  const cards = [
-    { text: 'Planning and Preparation', src: '/images/our-priorities/ourpriorities1.jpg' },
-    { text: 'Book Keeping and accounting', src: '/images/our-priorities/ourpriorities2.jpg' },
-    { text: 'Business Advisory Services', src: '/images/our-priorities/ourpriorities3.jpg' }
-  ]
   return (
     <Box
       bg={'#f5f6fa'}
@@ -24,6 +21,7 @@ export default function OurPriority() {
       p={{ base: 6, md: 12 }}
       px={{ base: 8, sm: 12, xl: 28 }}
       borderRadius={32}
+      mt={{ base: 8, md: 20 }}
     >
       <BannerText
         heading="OUR PRIORITIES"
@@ -76,7 +74,7 @@ export default function OurPriority() {
         ))}
       </Flex>
       <Flex w={'100%'} align={'center'} justify={'center'}>
-        <CustomButton label="Contact Us" />
+        <CustomButton label="Contact Us" btnIcon={<FaSquareArrowUpRight size={24} />} />
       </Flex>
     </Box>
   )

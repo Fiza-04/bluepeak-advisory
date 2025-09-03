@@ -1,55 +1,143 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import BannerText from "./banner-text";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { GiTechnoHeart } from "react-icons/gi";
-import { MdCyclone } from "react-icons/md";
+import CustomButton from "./custom-button";
+import { Lato } from "next/font/google";
 
-export default function JustifyText() {
-  const data = [
-    { icon: <BsFillPeopleFill size={24} />, text: "We prioritize building long-term relationships with our clients and always put their needs first." },
-    { icon: <GiTechnoHeart size={24} />, text: "Every client is unique, and we take the time to understand their specific needs and goals." },
-    { icon: <MdCyclone size={28} />, text: "We leverage cutting-edge technology to provide efficient and effective solutions." },
-  ]
+interface JustifyTextProps {
+  data: { icon: React.ReactNode; text: string, title?: string }[];
+  image: string;
+  button?: boolean;
+  btnText?: string;
+  btnIcon?: React.ReactNode;
+  btnRadius?: string;
+  overlay?: boolean;
+  overlayTitle?: string;
+  overlayCount?: string;
+  overlayText?: string;
+  mainBg?: boolean;
+}
+
+const lato700 = Lato({
+  variable: "--font-lato",
+  weight: ["700"],
+  subsets: ["latin"],
+});
+
+export default function JustifyText({
+  data,
+  image,
+  button = true,
+  btnText,
+  btnIcon,
+  btnRadius = 'full',
+  overlay = false,
+  overlayTitle,
+  overlayCount,
+  overlayText,
+  mainBg = false }: JustifyTextProps) {
   return (
-    <Box py={20} px={{ base: 8, sm: 12, xl: 28 }}>
-      <BannerText
-        heading="JUSTIFY TEXT"
-        title="Your business goals are our priority"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Est laudantium cumque architecto perferendis soluta quasi excepturi fuga minus ad autem nemo totam eligendi quibusdam laborum sed, repudiandae similique adipisci culpa."
-      />
+    <>
       <Flex
-        w={'100%'}
-        h={{ base: '250px', sm: '300px' }}
+        position="relative"
+        w="100%"
+        h={{ base: "250px", sm: "300px", xl: "400px" }}
         my={6}
         borderRadius={32}
-        bgImage={"url('/images/image1.jpg')"}
-        bgSize={'cover'}
-        bgPos={'center'}
-        bgRepeat={'no-repeat'}
+        bgImage={`url(${image})`}
+        bgSize="cover"
+        bgPos="center"
+        bgRepeat="no-repeat"
         direction="column"
-        justify={'flex-end'}
-        align={'center'}
+        justify="flex-end"
+        align="center"
+        overflow="hidden"
       >
+        {/* Overlay Layer */}
+        {overlay && (
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            w="100%"
+            h="100%"
+            bg="rgba(0, 0, 0, 0.51)"
+            zIndex={0}
+          />
+        )}
+
+        {/* Content */}
         <Flex
-          justify={'center'}
-          align={'center'}
-          bg={'#e37500'}
-          w={{ base: '150px', md: '170px' }}
-          h={'45px'}
-          borderRadius={'full'}
+          direction={{ base: 'column', md: 'row' }}
+          w={'100%'}
           mb={4}
-          fontSize={'18px'}
-          gap={2}
+          zIndex={1}
+          justify={overlayTitle ? { base: 'center', md: 'space-between' } : 'center'}
+          align={'center'}
         >
-          <IoIosArrowDropdownCircle size={28} />
-          <Text fontSize={{ base: '15px', md: '16px' }}>Read More</Text>
+          {button && (
+            <CustomButton
+              label={btnText}
+              btnIcon={btnIcon}
+              btnRadius={btnRadius}
+              iconSide="left"
+            />
+          )}
+
+          {overlayTitle && (
+            <Text
+              fontSize={{ base: 24, md: '36px', lg: '40px' }}
+              color={'white'}
+              className={lato700.className}
+              zIndex={1}
+              w={{ base: '70%', md: '60%', xl: '40%' }}
+              pl={{ md: 10 }}
+              pb={{ md: 10 }}
+              textAlign={{ base: "center", md: 'start' }}
+            >
+              {overlayTitle}
+            </Text>
+          )}
+
+          {overlayCount && overlayText && (
+            <Flex
+              direction={'column'}
+              align={{ base: 'center', md: 'flex-end' }}
+              w={{ base: '100%', md: '50%' }}
+              pr={{ md: 10 }}
+              pb={{ base: 2, md: 10 }}
+              justify={'center'}
+            >
+              <Text
+                fontSize={{ base: 32, md: '50px', lg: '65px' }}
+                color={'#ffd8bc'}
+                className={lato700.className}
+                zIndex={1}
+              >
+                {overlayCount}
+              </Text>
+              <Text
+                fontSize={{ base: 12, md: '16px' }}
+                color={'white'}
+                zIndex={1}
+              >
+                {overlayText}
+              </Text>
+            </Flex>
+          )}
         </Flex>
       </Flex>
-      <Flex direction={{ base: 'column', md: 'row' }} color="black" gap={{ base: 6, lg: 10 }}>
+      <Flex direction={{ base: 'column', md: 'row' }} color="black" gap={{ base: 6, lg: 10 }} mt={{ lg: 8 }}>
         {data.map((item, index) => (
-          <Box key={index}>
-            <Flex direction={{ base: 'row', md: 'column' }} gap={{ base: 4, md: 2 }}>
+          <Box
+            key={index}
+            w={{ base: '100%', md: '50%' }}
+            bg={mainBg ? 'white' : 'transparent'}
+            p={mainBg ? 6 : 0}
+            borderRadius={mainBg ? 20 : 0}
+          >
+            <Flex
+              direction={mainBg ? 'column' : { base: 'row', md: 'column' }}
+              align={mainBg ? { base: 'center', md: 'start' } : 'start'}
+              gap={{ base: 4, md: 2 }}>
               <Flex
                 w={'45px'}
                 h={'45px'}
@@ -61,11 +149,28 @@ export default function JustifyText() {
               >
                 {item.icon}
               </Flex>
-              <Text fontSize={{ base: '16px', lg: '18px' }} fontWeight={'600'} w={{ base: '80%', md: '100%' }}>{item.text}</Text>
+              {item.title && (
+                <Text
+                  fontSize={{ base: '16px', lg: '18px' }}
+                  fontWeight={'600'}
+                  w={{ base: '80%', md: '100%' }}
+                  textAlign={mainBg ? { base: 'center', md: 'start' } : 'start'}
+                >
+                  {item.title}
+                </Text>
+              )}
+              <Text
+                fontSize={item.title ? '16px' : { base: '16px', lg: '18px' }}
+                fontWeight={item.title ? '400' : '600'}
+                w={{ base: '80%', md: '100%' }}
+                textAlign={mainBg ? { base: 'center', md: 'start' } : 'start'}
+              >
+                {item.text}
+              </Text>
             </Flex>
           </Box>
         ))}
       </Flex>
-    </Box>
+    </>
   )
 }
