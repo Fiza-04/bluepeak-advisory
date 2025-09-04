@@ -1,7 +1,6 @@
 'use client';
 import { useEffect } from "react";
 import { Flex, Separator } from "@chakra-ui/react"
-import { Lato } from "next/font/google";
 import { TbSettingsDollar } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { PiFolderOpenLight } from "react-icons/pi";
@@ -11,18 +10,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const lato400 = Lato({
-  variable: "--font-lato",
-  weight: ["400"],
-  subsets: ["latin"],
-});
-
-const lato700 = Lato({
-  variable: "--font-lato",
-  weight: ["700"],
-  subsets: ["latin"],
-});
 
 export default function Landing() {
 

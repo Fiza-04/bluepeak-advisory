@@ -1,4 +1,4 @@
-import { Flex, Separator, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import CustomButton from "./custom-button";
 import { Lato } from "next/font/google";

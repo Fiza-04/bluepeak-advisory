@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from "react";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import ProcessTimeline from "../components/process-timeline";
 import gsap from "gsap";

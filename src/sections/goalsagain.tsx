@@ -1,10 +1,9 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import BannerText from "../components/banner-text";
 import JustifyText from "../components/justify-text";
 import { BsFillPeopleFill } from "react-icons/bs"
 import { GiTechnoHeart } from "react-icons/gi"
 import { MdCyclone } from "react-icons/md"
-import { IoIosArrowDropdownCircle } from "react-icons/io"
 
 export default function GoalsAgain() {
 

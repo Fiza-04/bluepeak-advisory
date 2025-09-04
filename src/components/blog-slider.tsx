@@ -67,7 +67,12 @@ export default function BlogSlider({ data }: BlogSliderProps) {
       }}
       style={{ width: '100%', paddingBottom: '50px' }}
     >
-      {data.map((item: any, index: any) => (
+      {data.map((item: {
+        date: string,
+        author: string,
+        title: string,
+        description: string
+      }, index: number) => (
         <SwiperSlide key={index}>
           <BlogCard
             date={item.date}

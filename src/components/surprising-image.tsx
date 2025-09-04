@@ -46,7 +46,7 @@ export default function SurprisingImage() {
         {/* Text */}
         <Box pl={2} lineHeight={{ base: "20px", lg: "27px" }}>
           <Text fontWeight="bold" fontSize={{ base: "20px", lg: "32px" }} color={'#632f00'}>10+</Text>
-          <Text fontSize={{ base: "10px", lg: "14px" }} color="gray.600">Year's Experience</Text>
+          <Text fontSize={{ base: "10px", lg: "14px" }} color="gray.600">Year&apos;s Experience</Text>
         </Box>
       </Box>
 

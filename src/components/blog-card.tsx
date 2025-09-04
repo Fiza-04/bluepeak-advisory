@@ -4,12 +4,6 @@ import CustomButton from "./custom-button";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { Lato } from "next/font/google";
 
-const lato400 = Lato({
-  variable: "--font-lato",
-  weight: ["400"],
-  subsets: ["latin"],
-});
-
 const lato700 = Lato({
   variable: "--font-lato",
   weight: ["700"],
