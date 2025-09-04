@@ -1,9 +1,38 @@
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { BiFile } from "react-icons/bi";
 import { TbBulbFilled, TbStack2Filled } from "react-icons/tb";
 import { FaFaceSmileBeam } from "react-icons/fa6";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProcessTimeline() {
+
+  useEffect(() => {
+    const timeline = gsap.utils.toArray(".timeline-blobs") as HTMLElement[];
+
+    timeline.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, x: 90 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.5,
+          delay: i * 0.2, // stagger by index
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 100%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }, []);
+
   const data = [
     {
       step: '01',
@@ -31,7 +60,12 @@ export default function ProcessTimeline() {
     },
   ]
   return (
-    <Flex direction={{ base: 'column', md: 'row' }} gap={{ base: 4, md: 0, lg: 4 }} w={'fit-content'} justify={'center'}>
+    <Flex
+      direction={{ base: 'column', md: 'row' }}
+      gap={{ base: 4, md: 0, lg: 4 }}
+      w={'fit-content'}
+      justify={'center'}
+    >
       {data.map((item, index) => (
         <Flex
           direction={{ base: 'column', md: 'row' }}
@@ -40,6 +74,7 @@ export default function ProcessTimeline() {
           justify={'center'}
           align={{ base: 'center', md: 'start' }}
           key={index}
+          className="timeline-blobs"
         >
           <Flex
             direction="column"
@@ -91,7 +126,13 @@ export default function ProcessTimeline() {
               </Text>
             </Box>
           </Flex>
-          {index !== data.length - 1 && <Box bg={'#632f00'} w={{ base: '2px', md: '40px', lg: '70px', xl: '100px' }} h={{ base: '100px', md: '2px' }} mt={{ base: 0, md: 9 }} />}
+          {index !== data.length - 1 &&
+            <Box
+              bg={'#632f00'}
+              w={{ base: '2px', md: '40px', lg: '70px', xl: '100px' }}
+              h={{ base: '100px', md: '2px' }}
+              mt={{ base: 0, md: 9 }}
+            />}
         </Flex>
       ))}
     </Flex>

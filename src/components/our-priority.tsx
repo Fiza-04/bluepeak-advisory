@@ -1,9 +1,15 @@
+'use client';
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import BannerText from "./banner-text";
 import CustomButton from "./custom-button";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { cards } from "../../utils/all-data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato400 = Lato({
   variable: "--font-lato",
@@ -12,6 +18,45 @@ const lato400 = Lato({
 });
 
 export default function OurPriority() {
+
+  useEffect(() => {
+    const priorityCards = gsap.utils.toArray(".priority-card") as HTMLElement[];
+
+    priorityCards.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: 90 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          delay: i * 0.2, // stagger by index
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 100%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+
+    gsap.fromTo(
+      ".priority-button",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".priority-button",
+          start: "top 100%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
 
   return (
     <Box
@@ -45,6 +90,7 @@ export default function OurPriority() {
             align="center"
             position="relative"
             overflow="hidden"
+            className="priority-card"
           >
             {/* Black bottom-to-middle fade */}
             <Box
@@ -73,7 +119,7 @@ export default function OurPriority() {
           </Flex>
         ))}
       </Flex>
-      <Flex w={'100%'} align={'center'} justify={'center'}>
+      <Flex className="priority-button" w={'100%'} align={'center'} justify={'center'}>
         <CustomButton label="Contact Us" btnIcon={<FaSquareArrowUpRight size={24} />} />
       </Flex>
     </Box>

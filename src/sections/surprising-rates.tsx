@@ -1,6 +1,13 @@
+'use client'
+
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import SurprisingImage from "@/components/surprising-image";
 import { Lato } from "next/font/google";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato700 = Lato({
   variable: "--font-lato",
@@ -9,6 +16,24 @@ const lato700 = Lato({
 });
 
 export default function SurprisingRates() {
+
+  useEffect(() => {
+    gsap.fromTo(
+      '.signature-image',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".signature-image",
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
 
   const data = [
     { title: 'Business is the Best Plan', src: '/images/surprising-rates/surprisingrates1.jpg' },
@@ -25,6 +50,7 @@ export default function SurprisingRates() {
       pt={{ base: 0, lg: 10 }}
       gap={10}
       color={'black'}
+      className="signature-image"
     >
       <Flex
         justify={{ base: 'center', md: 'start' }}

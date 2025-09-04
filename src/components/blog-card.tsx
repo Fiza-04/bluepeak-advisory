@@ -27,9 +27,12 @@ export default function BlogCard({
   date,
   author,
   title,
-  description }: BlogCardProps) {
+  description
+}: BlogCardProps) {
+
   return (
     <Box
+      className="blog-card"
       w={{ base: '100%', sm: '300px', xl: '300px' }}
       h={'fit-content'}
       bg={'#fff5ee'}
@@ -77,6 +80,6 @@ export default function BlogCard({
           <CustomButton label="Read More" btnIcon={<FaSquareArrowUpRight size={24} />} bg={'#ae5800'} />
         </Box>
       </Box>
-    </Box >
+    </Box>
   )
 }

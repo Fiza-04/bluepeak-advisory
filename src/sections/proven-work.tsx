@@ -1,6 +1,12 @@
+'use client'
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import ProcessTimeline from "../components/process-timeline";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato700 = Lato({
   variable: "--font-lato",
@@ -9,12 +15,31 @@ const lato700 = Lato({
 });
 
 export default function ProvenWork() {
+
+  useEffect(() => {
+    gsap.fromTo(
+      '.process-timeline-text',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".process-timeline-text",
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+  }, []);
   return (
     <Flex direction={'column'} h={'fit-content'} w={'100%'} align={'center'} my={{ base: 20, lg: 32 }}>
       <Text
         fontSize={'14px'}
         color={'#e37500'}
-        className={lato700.className}
+        className={'lato700.className ' + lato700.className}
         pb={4}
         letterSpacing={1}
         textAlign={'center'}
@@ -32,7 +57,7 @@ export default function ProvenWork() {
         color={'black'}
         gap={2}
       >
-        <Text>Our Proven</Text> <Text color={'#e37500'}>Work Process</Text>
+        <Text className="process-timeline-text">Our Proven</Text> <Text color={'#e37500'}>Work Process</Text>
       </Flex>
       <ProcessTimeline />
     </Flex>

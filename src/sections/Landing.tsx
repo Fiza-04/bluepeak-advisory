@@ -1,12 +1,16 @@
-import { Box, Flex, Separator, Text } from "@chakra-ui/react"
+'use client';
+import { useEffect } from "react";
+import { Flex, Separator } from "@chakra-ui/react"
 import { Lato } from "next/font/google";
-import CustomButton from "../components/custom-button";
-import { FaSquareArrowUpRight } from "react-icons/fa6";
 import { TbSettingsDollar } from "react-icons/tb";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { PiFolderOpenLight } from "react-icons/pi";
 import Banner from "../components/banner";
 import CardRow from "@/components/card-row";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato400 = Lato({
   variable: "--font-lato",
@@ -21,6 +25,29 @@ const lato700 = Lato({
 });
 
 export default function Landing() {
+
+  useEffect(() => {
+    const landingCards = gsap.utils.toArray(".landing-card") as HTMLElement[];
+
+    landingCards.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: 90 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          delay: i * 0.2, // stagger by index
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+  }, []);
 
   const cards = [
     {
@@ -55,7 +82,7 @@ export default function Landing() {
         my={8}
       >
         {cards.map((card, index) => (
-          <Flex direction={{ base: 'column', md: 'row' }} gap={6} key={index}>
+          <Flex direction={{ base: 'column', md: 'row' }} gap={6} key={index} className="landing-card">
             <CardRow key={index} title={card.title} text={card.text} icon={card.icon} />
             {
               index < cards.length - 1 &&

@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from "react";
 import { Box, Flex, Input, InputGroup, Separator, Text } from "@chakra-ui/react";
 import Banner from "@/components/banner";
 import BlogCard from "@/components/blog-card";
@@ -7,6 +8,11 @@ import { Lato } from "next/font/google";
 import { IoIosArrowForward } from "react-icons/io";
 import CustomButton from "@/components/custom-button";
 import { blogData, blogtypes, recents } from "../../../utils/all-data";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 
 const lato700 = Lato({
   variable: "--font-lato",
@@ -15,6 +21,63 @@ const lato700 = Lato({
 });
 
 export default function Blog() {
+  useEffect(() => {
+    const cards = gsap.utils.toArray(".blog-card") as HTMLElement[];
+
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 100 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: i * 0.2, // Stagger manually
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,           // ✅ Trigger each card individually
+            start: "top 80%",        // ✅ Animation starts when card enters viewport
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+
+    gsap.fromTo(
+      ".more-posts",
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".more-posts",           // ✅ Trigger each card individually
+          start: "top 80%",        // ✅ Animation starts when card enters viewport
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".load-more-button",
+      { opacity: 0, scale: 0, y: 30 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".load-more-button",
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
+
 
   return (
     <Box pb={10}>
@@ -36,7 +99,9 @@ export default function Blog() {
               />
             ))}
           </Flex>
-          <CustomButton label="Load More" btnRadius={'full'} btnIcon={<BiLoader size={24} />} />
+          <Box className="load-more-button">
+            <CustomButton label="Load More" btnRadius={'full'} btnIcon={<BiLoader size={24} />} />
+          </Box>
         </Flex>
         <Flex
           direction={'column'}
@@ -45,6 +110,7 @@ export default function Blog() {
           p={4}
           mt={{ base: 10, md: 0 }}
           borderTopLeftRadius={5}
+          className="more-posts"
         >
           <InputGroup endElement={
             <Flex

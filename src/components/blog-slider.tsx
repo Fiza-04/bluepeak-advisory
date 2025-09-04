@@ -1,9 +1,15 @@
+'use client'
+import { useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import BlogCard from "./blog-card";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface BlogSliderProps {
   data: {
@@ -15,8 +21,30 @@ interface BlogSliderProps {
 }
 
 export default function BlogSlider({ data }: BlogSliderProps) {
+  const swiperBlogRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      swiperBlogRef.current,
+      { opacity: 0, x: -150 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 2,
+        delay: 0.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: swiperBlogRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
   return (
     <Swiper
+      ref={swiperBlogRef}
+      className="blog-slider"
       breakpoints={{
         0: { slidesPerView: 1 },
         540: { slidesPerView: 2 },

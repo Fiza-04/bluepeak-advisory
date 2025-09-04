@@ -1,6 +1,12 @@
+'use client';
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomButton from "./custom-button";
 import { Lato } from "next/font/google";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface JustifyTextProps {
   data: { icon: React.ReactNode; text: string, title?: string }[];
@@ -34,6 +40,46 @@ export default function JustifyText({
   overlayCount,
   overlayText,
   mainBg = false }: JustifyTextProps) {
+
+  useEffect(() => {
+    const justifyText = gsap.utils.toArray(".justify-text") as HTMLElement[];
+
+    justifyText.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: 90 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          delay: i * 0.2, // stagger by index
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+
+    gsap.fromTo(
+      ".justify-banner",
+      { opacity: 0, scale: 0.8 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".justify-banner",
+          start: "top 90%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
     <>
       <Flex
@@ -50,6 +96,7 @@ export default function JustifyText({
         justify="flex-end"
         align="center"
         overflow="hidden"
+        className="justify-banner"
       >
         {/* Overlay Layer */}
         {overlay && (
@@ -133,6 +180,7 @@ export default function JustifyText({
             bg={mainBg ? 'white' : 'transparent'}
             p={mainBg ? 6 : 0}
             borderRadius={mainBg ? 20 : 0}
+            className="justify-text"
           >
             <Flex
               direction={mainBg ? 'column' : { base: 'row', md: 'column' }}

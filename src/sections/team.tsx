@@ -1,5 +1,6 @@
 
 'use client'
+import { useEffect, useRef } from "react";
 import { Flex } from "@chakra-ui/react";
 import BannerText from "../components/banner-text";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,8 +10,32 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import TeamCard from '../components/team-card';
 import { teams } from '../../utils/all-data';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Team() {
+  const swiperRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      swiperRef.current,
+      { opacity: 0, x: -150 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 2,
+        delay: 0.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: swiperRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
 
   return (
     <Flex
@@ -23,10 +48,11 @@ export default function Team() {
     >
       <BannerText
         heading="OUR TEAM"
-        title="We're ready to share our experience."
+        title="We're ready to share our advice."
         description="We develop the relationships that underpin the next phase in your organisation’s growth. We do this by discerning the people and that platforms where interests converge."
       />
       <Swiper
+        ref={swiperRef}
         breakpoints={{
           0: { slidesPerView: 1 },
           540: { slidesPerView: 2 },

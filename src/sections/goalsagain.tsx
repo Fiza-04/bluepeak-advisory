@@ -19,7 +19,6 @@ export default function GoalsAgain() {
       borderRadius={32}
       py={20}
       px={{ base: 8, sm: 12, xl: 28 }}
-    // my={20}
     >
       <BannerText
         heading="JUSTIFY TEXT"

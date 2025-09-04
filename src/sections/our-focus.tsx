@@ -1,8 +1,14 @@
+'use client';
+import { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { Lato } from "next/font/google";
 import CustomButton from "@/components/custom-button";
 import CountGrid from "@/components/count-grid";
 import { FaSquareArrowUpRight } from "react-icons/fa6";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato700 = Lato({
   variable: "--font-lato",
@@ -11,6 +17,43 @@ const lato700 = Lato({
 });
 
 export default function OurFocus() {
+
+  useEffect(() => {
+
+    gsap.fromTo(
+      '.our-focus-left',
+      { opacity: 0, x: -100 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".our-focus-left",
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    // Animate text (fade in from right)
+    gsap.fromTo(
+      '.our-focus-right',
+      { opacity: 0, x: 100 },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".our-focus-right",
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
     <Flex
       direction={{ base: 'column', md: 'row' }}
@@ -20,7 +63,7 @@ export default function OurFocus() {
       pb={{ base: 10, xl: 20 }}
       gap={10}
     >
-      <Box color={'black'} w={{ base: '100%', md: '45%' }}>
+      <Box color={'black'} w={{ base: '100%', md: '45%' }} className="our-focus-left">
         <Text
           fontSize={'14px'}
           color={'#e37500'}
@@ -45,7 +88,7 @@ export default function OurFocus() {
           <CustomButton label="Read More" btnIcon={<FaSquareArrowUpRight size={24} />} />
         </Flex>
       </Box>
-      <Box w={{ base: '100%', md: '550px', lg: '650px' }}>
+      <Box w={{ base: '100%', md: '550px', lg: '650px' }} className="our-focus-right">
         <CountGrid />
       </Box>
     </Flex>

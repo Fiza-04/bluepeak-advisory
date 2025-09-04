@@ -1,3 +1,5 @@
+'use client'
+import { useEffect, useRef } from "react";
 import { Box, Flex, Text, Input, Textarea } from "@chakra-ui/react";
 import BannerText from "../components/banner-text";
 import { FaLocationDot, FaSquareArrowUpRight } from "react-icons/fa6";
@@ -5,6 +7,10 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { Lato } from "next/font/google";
 import CustomButton from "../components/custom-button";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const lato400 = Lato({
   variable: "--font-lato",
@@ -19,6 +25,49 @@ const lato700 = Lato({
 });
 
 export default function ContactForm() {
+  const rightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const contactItems = gsap.utils.toArray(".contact-item") as HTMLElement[];
+
+    contactItems.forEach((item, i) => {
+      gsap.fromTo(
+        item,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: i * 0.2, // stagger by index
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+
+    // Animate right side - fade in from right staggered
+    gsap.fromTo(
+      rightRef.current,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.3,
+        scrollTrigger: {
+          trigger: rightRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   const data = [
     { icon: <FaLocationDot size={28} />, title: "Head Office Address", text: "123 Main Street, City, Country" },
     { icon: <FaPhoneAlt size={28} />, title: "Call Us for Advice", text: "+123 456 789" },
@@ -38,13 +87,13 @@ export default function ContactForm() {
     >
       <BannerText
         heading="CONTACT US"
-        title="We're ready to share our experience."
+        title="We're ready to share our advice."
         description="We develop the relationships that underpin the next phase in your organisation’s growth. We do this by discerning the people and that platforms where interests converge."
       />
       <Flex justify={{ base: 'center', md: 'space-between' }} mt={{ md: 6 }} direction={{ base: 'column', md: 'row' }}>
         <Flex direction={'column'} w={{ base: '100%', md: '50%' }}>
           {data.map((item, index) => (
-            <Flex key={index} gap={3} pb={8} w={'100%'}>
+            <Flex className="contact-item" key={index} gap={3} pb={8} w={'100%'}>
               <Flex w={'55px'} h={'55px'} borderRadius={'5px'} bg={'#ae5800'} justify={'center'} align={'center'}>
                 {item.icon}
               </Flex>
@@ -56,7 +105,7 @@ export default function ContactForm() {
           ))}
 
         </Flex>
-        <Flex direction={'column'} color={'#ae5800'} w={{ base: '100%', md: '50%' }} gap={4} mt={{ base: 4, md: 0 }}>
+        <Flex ref={rightRef} direction={'column'} color={'#ae5800'} w={{ base: '100%', md: '50%' }} gap={4} mt={{ base: 4, md: 0 }}>
           <Input
             variant="subtle"
             bg={'#ffc49a'}
